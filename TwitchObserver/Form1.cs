@@ -26,14 +26,15 @@ namespace TwitchObserver
                 // прячем наше окно из панели
                 this.ShowInTaskbar = false;
                 // делаем нашу иконку в трее активной
-                notifyIcon1.Visible = true;
+                //notifyIcon1.Visible = true;
+                //notifyIcon1.ShowBalloonTip(3000, "Ho", "Hi", ToolTipIcon.Info);
             }
         }
-        
+
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            notifyIcon1.Visible = false;
+            //notifyIcon1.Visible = false;
             this.ShowInTaskbar = true;
             WindowState = FormWindowState.Normal;
         }
@@ -86,6 +87,29 @@ namespace TwitchObserver
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (!checkedListBox1.Sorted)
+            {
+                var temp = new List<string>(checkedListBox1.Items.OfType<string>());
+                temp.Sort();
+                checkedListBox1.Items.Clear();
+                checkedListBox1.Items.AddRange(temp.ToArray());
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var temp = new HashSet<string>();
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            {
+                temp.Add((string) checkedListBox1.Items[i]);
+            }
+
+            checkedListBox1.Items.Clear();
+            checkedListBox1.Items.AddRange(temp.ToArray());
         }
     }
 }

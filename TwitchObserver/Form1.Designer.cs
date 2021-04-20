@@ -1,4 +1,6 @@
-﻿namespace TwitchObserver
+﻿using System.Windows.Forms;
+
+namespace TwitchObserver
 {
     partial class Form1
     {
@@ -38,19 +40,22 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // notifyIcon1
             // 
+            notifyIcon1.Visible = true;
             this.notifyIcon1.Icon = ((System.Drawing.Icon) (resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "notifyIcon1";
-            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
-            this.textBox1.Location = new System.Drawing.Point(431, 93);
+            this.textBox1.Location = new System.Drawing.Point(404, 43);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(354, 34);
             this.textBox1.TabIndex = 1;
@@ -59,7 +64,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(619, 157);
+            this.button1.Location = new System.Drawing.Point(592, 116);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(166, 37);
             this.button1.TabIndex = 2;
@@ -70,7 +75,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(431, 218);
+            this.button2.Location = new System.Drawing.Point(404, 199);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(166, 37);
             this.button2.TabIndex = 3;
@@ -81,7 +86,7 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(619, 218);
+            this.button3.Location = new System.Drawing.Point(592, 199);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(166, 37);
             this.button3.TabIndex = 4;
@@ -92,7 +97,7 @@
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(431, 157);
+            this.button4.Location = new System.Drawing.Point(404, 116);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(166, 37);
             this.button4.TabIndex = 5;
@@ -106,18 +111,42 @@
             this.checkedListBox1.CheckOnClick = true;
             this.checkedListBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(33, 43);
+            this.checkedListBox1.Location = new System.Drawing.Point(21, 43);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(369, 354);
+            this.checkedListBox1.Size = new System.Drawing.Size(368, 429);
             this.checkedListBox1.TabIndex = 6;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            // 
+            // button5
+            // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.Location = new System.Drawing.Point(404, 335);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(166, 37);
+            this.button5.TabIndex = 7;
+            this.button5.Text = "Delete Duplicates";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.Location = new System.Drawing.Point(592, 335);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(166, 37);
+            this.button6.TabIndex = 8;
+            this.button6.Text = "Sort";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (100)))), ((int) (((byte) (65)))), ((int) (((byte) (165)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(782, 553);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -125,11 +154,19 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "Form1";
             this.Text = "Amogus";
             this.ResumeLayout(false);
             this.PerformLayout();
+            
+            
+            //
+            //notifyIcon1.ShowBalloonTip(1000, this.Text, "Приложение свернуто в трей", ToolTipIcon.Info);
         }
+
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
 
         private System.Windows.Forms.CheckedListBox checkedListBox1;
 
