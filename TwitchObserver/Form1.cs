@@ -4,39 +4,76 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TwitchLib.Api.V5.Models.Users;
 
 namespace TwitchObserver
 {
     public partial class Form1 : Form
     {
+
         public Form1()
         {
             InitializeComponent();
             this.Resize += new System.EventHandler(this.Form1_Resize);
+            Solve();
+            ClearUser();
         }
 
+        public async void ClearUser()
+        {
+            while (true)
+            {
+                await Task.Run(Users.Online.Clear);
+                await Task.Delay(Settings.Delay * 2);
+            }
+        }
+        
+        public async void Solve()
+        {
+            while (true)
+            {
+                await Task.Run(Users.GetOnlineUsers);
+                await Task.Run(() =>
+                {
+                    if(Users.Online.Count != 0)
+                        PopUp($"Online: {string.Join(", ", Users.Online)}");
+                });
+                await Task.Delay(Settings.Delay);
+            }
+        }
+
+
+        private async void PopUp(string message, int timeout = 1000)
+        {
+            await Task.Run(() =>
+            {
+                if(!string.IsNullOrEmpty(message))
+                    notifyIcon1.ShowBalloonTip(timeout, this.Text, message, ToolTipIcon.None);
+            });
+
+        }
+        
+        
         private void Form1_Resize(object sender, EventArgs e)
         {
             // проверяем наше окно, и если оно было свернуто, делаем событие        
             if (WindowState == FormWindowState.Minimized)
             {
                 // прячем наше окно из панели
-                this.ShowInTaskbar = false;
-                // делаем нашу иконку в трее активной
-                //notifyIcon1.Visible = true;
-                //notifyIcon1.ShowBalloonTip(3000, "Ho", "Hi", ToolTipIcon.Info);
+                this.Hide();
+                PopUp("the program is minimized to tray");
             }
         }
 
-
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
-            //notifyIcon1.Visible = false;
-            this.ShowInTaskbar = true;
-            WindowState = FormWindowState.Normal;
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -48,6 +85,7 @@ namespace TwitchObserver
                     if (!string.IsNullOrEmpty(textBox1.Text))
                     {
                         checkedListBox1.Items.Add(textBox1.Text);
+                        Users.Add(textBox1.Text);
                         textBox1.Clear();
                     }
                 }
@@ -59,6 +97,7 @@ namespace TwitchObserver
             if (!string.IsNullOrEmpty(textBox1.Text))
             {
                 checkedListBox1.Items.Add(textBox1.Text);
+                Users.Add(textBox1.Text);
                 textBox1.Clear();
             }
         }
@@ -82,6 +121,7 @@ namespace TwitchObserver
         private void button4_Click(object sender, EventArgs e)
         {
             checkedListBox1.CheckedItems.OfType<string>().ToList().ForEach(checkedListBox1.Items.Remove);
+            Users.SetHashSet(checkedListBox1.Items.OfType<string>().ToHashSet());
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
