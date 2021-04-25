@@ -20,7 +20,7 @@ namespace TwitchObserver
             InitializeComponent();
             this.Resize += new System.EventHandler(this.Form1_Resize);
             Solve();
-            ClearUser();
+            //ClearUser();
         }
 
         public async void ClearUser()
@@ -36,12 +36,10 @@ namespace TwitchObserver
         {
             while (true)
             {
-                await Task.Run(Users.GetOnlineUsers);
-                await Task.Run(() =>
-                {
-                    if(Users.Online.Count != 0)
+                var task = Task.Run(async () => { await Users.GetOnlineUsers(); });
+                task.Wait();
+                if(Users.Online.Count != 0)
                         PopUp($"Online: {string.Join(", ", Users.Online)}");
-                });
                 await Task.Delay(Settings.Delay);
             }
         }
