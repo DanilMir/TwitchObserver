@@ -12,16 +12,18 @@ namespace TwitchObserver
     public static class Users
     {
         public static HashSet<string> Data = new HashSet<string>();
-        public static List<string> Online = new List<string>() {};
-        
+        public static List<string> OldOnline = new List<string>() { };
+        public static List<string> NowOnline = new List<string>() { };
+
         private static readonly IApiSettings _settings = new ApiSettings()
         {
             ClientId = "gp762nuuoqcoxypju8c569th9wz7q5",
             AccessToken = "6h8p4zccs3o7iuqozsgxitfdz7pykx"
         };
+
         private static readonly TwitchAPI _twitchApi = new TwitchAPI(settings: _settings);
 
-        
+
         public static int Length => Data.Count;
 
         public static void Add(string nickname)
@@ -39,21 +41,25 @@ namespace TwitchObserver
             var temp = _twitchApi.Helix.Users.GetUsersAsync(logins: Data.ToList());
             return temp.Result.Users.ToList();
         }
-        
+
         public static async Task GetOnlineUsers()
         {
-            Online.Clear();
+            NowOnline.Clear();
+            var online = new List<string>();
             var temp = Task.Run(GetUserInfo);
             foreach (var user in temp.Result)
             {
                 if (await _twitchApi.V5.Streams.BroadcasterOnlineAsync(user.Id))
                 {
-                    await Task.Run(() =>
+                    if (!OldOnline.Contains(user.DisplayName))
                     {
-                        Online.Add(user.DisplayName);
-                    });
+                        await Task.Run(() => { NowOnline.Add(user.DisplayName); });
+                    }
+                    await Task.Run(() => { online.Add(user.DisplayName); });
                 }
             }
+
+            OldOnline = new List<string>(online);
         }
     }
 }

@@ -35,13 +35,12 @@ namespace TwitchObserver.Tests
         [Test]
         public void GetOnline()
         {
-            Users.Online.Clear();
+            Users.OldOnline.Clear();
             Users.Data.Clear();
             Users.Data.Add("NYC_Timescape");
             var task = Task.Run(async () => { await Users.GetOnlineUsers(); });
             task.Wait();
-            //Assert.AreEqual(1, Users.Data.Count);
-            Assert.AreEqual(1, Users.Online.Count);
+            Assert.AreEqual(1, Users.OldOnline.Count);
         }
     }
 }

@@ -19,27 +19,17 @@ namespace TwitchObserver
         {
             InitializeComponent();
             this.Resize += new System.EventHandler(this.Form1_Resize);
-            Solve();
-            //ClearUser();
+            Cycle();
         }
 
-        public async void ClearUser()
-        {
-            while (true)
-            {
-                await Task.Run(Users.Online.Clear);
-                await Task.Delay(Settings.Delay * 2);
-            }
-        }
-        
-        public async void Solve()
+        private async void Cycle()
         {
             while (true)
             {
                 var task = Task.Run(async () => { await Users.GetOnlineUsers(); });
                 task.Wait();
-                if(Users.Online.Count != 0)
-                        PopUp($"Online: {string.Join(", ", Users.Online)}");
+                if(Users.NowOnline.Count != 0)
+                        PopUp($"Online: {string.Join(", ", Users.NowOnline)}");
                 await Task.Delay(Settings.Delay);
             }
         }
@@ -63,7 +53,7 @@ namespace TwitchObserver
             {
                 // прячем наше окно из панели
                 this.Hide();
-                PopUp("the program is minimized to tray");
+                //PopUp("the program is minimized to tray");
             }
         }
 
