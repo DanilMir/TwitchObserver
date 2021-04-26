@@ -60,8 +60,7 @@ namespace TwitchObserver
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             this.Show();
-            this.WindowState = FormWindowState.Normal;
-            
+            this.WindowState = FormWindowState.Normal; 
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -131,9 +130,9 @@ namespace TwitchObserver
         private void button5_Click(object sender, EventArgs e)
         {
             var temp = new HashSet<string>();
-            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            foreach (var t in checkedListBox1.Items)
             {
-                temp.Add((string) checkedListBox1.Items[i]);
+                temp.Add((string) t);
             }
 
             checkedListBox1.Items.Clear();
