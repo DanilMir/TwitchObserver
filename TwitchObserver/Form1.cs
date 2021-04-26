@@ -19,6 +19,8 @@ namespace TwitchObserver
         {
             InitializeComponent();
             this.Resize += new System.EventHandler(this.Form1_Resize);
+            Users.UpdateStreamerList();
+            LoadUserList();
             Cycle();
         }
 
@@ -63,6 +65,15 @@ namespace TwitchObserver
             this.WindowState = FormWindowState.Normal; 
         }
 
+        public void LoadUserList()
+        {
+            var temp = Users.Data.ToStringList();
+            foreach (var streamer in temp)
+            {
+                checkedListBox1.Items.Add(streamer);
+            }
+        }
+        
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             textBox1.KeyDown += (sender, args) =>

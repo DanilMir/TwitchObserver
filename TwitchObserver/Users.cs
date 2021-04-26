@@ -23,12 +23,15 @@ namespace TwitchObserver
 
         private static readonly TwitchAPI _twitchApi = new TwitchAPI(settings: _settings);
 
+        public static JsonInteraction JSON = new JsonInteraction();
+
 
         public static int Length => Data.Count;
 
         public static void Add(string nickname)
         {
             Data.Add(new Streamer(nickname, Platform.Twitch));
+            JSON.UpdateUserList(Data);
         }
 
         public static void SetHashSet(HashSet<string> users)
@@ -38,10 +41,16 @@ namespace TwitchObserver
             {
                 Data.Add(new Streamer(user, Platform.Twitch));
             }
+            JSON.UpdateUserList(Data);
         }
 
 
-        private static List<string> ToStringList(this List<Streamer> streamers)
+        public static void UpdateStreamerList()
+        {
+            Data = JSON.GetCurrentStreamersList();
+        }
+
+        public static List<string> ToStringList(this List<Streamer> streamers)
         {
             var temp = new List<string>();
             foreach (var streamer in streamers)
@@ -51,7 +60,6 @@ namespace TwitchObserver
             
             return temp;
         }
-        
         
         public static List<User> GetUserInfo()
         {
