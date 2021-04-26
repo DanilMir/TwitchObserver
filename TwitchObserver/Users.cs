@@ -11,7 +11,7 @@ namespace TwitchObserver
 {
     public static class Users
     {
-        public static HashSet<string> Data = new HashSet<string>();
+        public static List<Streamer> Data = new List<Streamer>();
         public static List<string> OldOnline = new List<string>() { };
         public static List<string> NowOnline = new List<string>() { };
 
@@ -28,17 +28,34 @@ namespace TwitchObserver
 
         public static void Add(string nickname)
         {
-            Data.Add(nickname);
+            Data.Add(new Streamer(nickname, Platform.Twitch));
         }
 
         public static void SetHashSet(HashSet<string> users)
         {
-            Data = users;
+            Data.Clear();
+            foreach (var user in users)
+            {
+                Data.Add(new Streamer(user, Platform.Twitch));
+            }
         }
 
+
+        private static List<string> ToStringList(this List<Streamer> streamers)
+        {
+            var temp = new List<string>();
+            foreach (var streamer in streamers)
+            {
+                temp.Add(streamer.Nickname);
+            }
+            
+            return temp;
+        }
+        
+        
         public static List<User> GetUserInfo()
         {
-            var temp = _twitchApi.Helix.Users.GetUsersAsync(logins: Data.ToList());
+            var temp = _twitchApi.Helix.Users.GetUsersAsync(logins: Data.ToStringList());
             return temp.Result.Users.ToList();
         }
 

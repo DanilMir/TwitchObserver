@@ -2,13 +2,13 @@
 {
     public class Streamer
     {
-        private string _nickname;
-        private Platform _platform;
+        public string Nickname;
+        public Platform Platform;
 
         public Streamer(string nickname, Platform platform)
         {
-            _nickname = nickname;
-            _platform = platform;
+            Nickname = nickname;
+            Platform = platform;
         }
     }
 }
