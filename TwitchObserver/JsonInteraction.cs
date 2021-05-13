@@ -49,7 +49,6 @@ namespace TwitchObserver
                 {
                     await sw.WriteLineAsync(JsonConvert.SerializeObject(streamers, Formatting.Indented));
                 }
-                //Console.WriteLine($"Пользоатель добавлен");
             }
             catch (Exception e)
             {
