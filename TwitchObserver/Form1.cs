@@ -12,7 +12,7 @@ using TwitchLib.Api.V5.Models.Users;
 
 namespace TwitchObserver
 {
-    public partial class Form1 : Form
+    public partial class Form1 : MetroFramework.Forms.MetroForm
     {
 
         public Form1()
@@ -148,6 +148,66 @@ namespace TwitchObserver
 
             checkedListBox1.Items.Clear();
             checkedListBox1.Items.AddRange(temp.ToArray());
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void metroButton1_Click_1(object sender, EventArgs e)
+        {
+            checkedListBox1.CheckedItems.OfType<string>().ToList().ForEach(checkedListBox1.Items.Remove);
+            Users.SetHashSet(checkedListBox1.Items.OfType<string>().ToHashSet());
+        }
+
+        private void metroButton2_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox1.Text))
+            {
+                checkedListBox1.Items.Add(textBox1.Text);
+                Users.Add(textBox1.Text);
+                textBox1.Clear();
+            }
+        }
+
+        private void metroButton3_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            {
+                checkedListBox1.SetItemChecked(i, true);
+            }
+        }
+
+        private void metroButton4_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            {
+                checkedListBox1.SetItemChecked(i, false);
+            }
+        }
+
+        private void metroButton5_Click(object sender, EventArgs e)
+        {
+            var temp = new HashSet<string>();
+            foreach (var t in checkedListBox1.Items)
+            {
+                temp.Add((string)t);
+            }
+
+            checkedListBox1.Items.Clear();
+            checkedListBox1.Items.AddRange(temp.ToArray());
+        }
+
+        private void metroButton6_Click(object sender, EventArgs e)
+        {
+            if (!checkedListBox1.Sorted)
+            {
+                var temp = new List<string>(checkedListBox1.Items.OfType<string>());
+                temp.Sort();
+                checkedListBox1.Items.Clear();
+                checkedListBox1.Items.AddRange(temp.ToArray());
+            }
         }
     }
 }
